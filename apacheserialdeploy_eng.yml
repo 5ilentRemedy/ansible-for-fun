@@ -5,7 +5,7 @@
   # Process hosts one by one to demonstrate the "rolling" effect
   serial: "{{ run_serial | default('100%') }}"
   
-  # Halt the entire play if more than 40% of the nodes in the current wave fail
+  # Halt the entire play if more than X% of the nodes in the current wave fail
   max_fail_percentage: "{{ run_max_fail | default(100) }}"
   tasks:
     - name: Update apt cache
