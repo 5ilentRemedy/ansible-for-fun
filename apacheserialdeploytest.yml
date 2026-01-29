@@ -1,0 +1,30 @@
+---
+- name: Testowanie mechanizmów serial i max_fail
+  hosts: all
+  serial: 1
+  
+
+  max_fail_percentage: 40
+
+  tasks:
+    - name: Aktualizacja cache apt
+      apt:
+        update_cache: yes
+      register: apt_res
+
+
+    - name: Instalacja Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Upewnienie się, że Apache działa
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Podmiana strony głównej (dla testu)
+      copy:
+        content: "Strona testowa - nowy serwer WWW na {{ inventory_hostname }} "
+        dest: /var/www/html/index.html
